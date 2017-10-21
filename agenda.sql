@@ -26,16 +26,16 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `agenda`
 --
 
-CREATE TABLE `Agenda` (
-  `Espaco` varchar(20) NOT NULL,
-  `Evento` int(11) NOT NULL,
-  `DataFim` date NOT NULL,
-  `HoraInicio` time NOT NULL,
-  `HoraFim` time NOT NULL,
-  `Log` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `DataInicio` date NOT NULL,
-  `Responsavel` int(11) NOT NULL,
-  `CodigoCat` int(11) NOT NULL
+CREATE TABLE `agenda` (
+  `espaco` varchar(20) NOT NULL,
+  `evento` int(11) NOT NULL,
+  `data_fim` date NOT NULL,
+  `hora_inicio` time NOT NULL,
+  `hora_fim` time NOT NULL,
+  `log` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `data_inicio` date NOT NULL,
+  `responsavel` int(11) NOT NULL,
+  `cod_cat` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -45,8 +45,8 @@ CREATE TABLE `Agenda` (
 --
 -- Indexes for table `agenda`
 --
-ALTER TABLE `Agenda`
-  ADD PRIMARY KEY (`Evento`);
+ALTER TABLE `agenda`
+  ADD PRIMARY KEY (`evento`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -55,8 +55,8 @@ ALTER TABLE `Agenda`
 --
 -- AUTO_INCREMENT for table `agenda`
 --
-ALTER TABLE `Agenda`
-  MODIFY `Evento` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `agenda`
+  MODIFY `evento` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
