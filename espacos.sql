@@ -30,7 +30,8 @@ CREATE TABLE `Espacos` (
   `Nome` varchar(50) NOT NULL,
   `Descricao` text NOT NULL,
   `ValorHora` int(11) NOT NULL,
-  `Vagas` int(11) NOT NULL
+  `Vagas` int(11) NOT NULL,
+  `Fotos` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
