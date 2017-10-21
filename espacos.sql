@@ -23,15 +23,15 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `Espacos`
+-- Estrutura da tabela `espacos`
 --
 
-CREATE TABLE `Espacos` (
-  `Nome` varchar(50) NOT NULL,
-  `Descricao` text NOT NULL,
-  `ValorHora` int(11) NOT NULL,
-  `Vagas` int(11) NOT NULL,
-  `Fotos` text NOT NULL
+CREATE TABLE `espacos` (
+  `nome` varchar(50) NOT NULL,
+  `descricao` text NOT NULL,
+  `valor_hora` int(11) NOT NULL,
+  `vagas` int(11) NOT NULL,
+  `fotos` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -41,8 +41,8 @@ CREATE TABLE `Espacos` (
 --
 -- Indexes for table `espaços`
 --
-ALTER TABLE `Espacos`
-  ADD PRIMARY KEY (`Nome`);
+ALTER TABLE `espacos`
+  ADD PRIMARY KEY (`nome`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
