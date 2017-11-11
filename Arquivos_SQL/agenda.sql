@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `agenda` (
   `espaco` varchar(20) NOT NULL,
+  `descricao` text NOT NULL,
   `evento` int(11) NOT NULL,
   `data_fim` date NOT NULL,
   `hora_inicio` time NOT NULL,
