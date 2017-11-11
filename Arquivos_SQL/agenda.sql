@@ -47,7 +47,7 @@ CREATE TABLE `agenda` (
 -- Indexes for table `agenda`
 --
 ALTER TABLE `agenda`
-  ADD PRIMARY KEY (`evento`);
+  ADD PRIMARY KEY (`id_evento`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -57,7 +57,7 @@ ALTER TABLE `agenda`
 -- AUTO_INCREMENT for table `agenda`
 --
 ALTER TABLE `agenda`
-  MODIFY `evento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
