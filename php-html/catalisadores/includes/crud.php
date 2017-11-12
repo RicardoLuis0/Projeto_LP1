@@ -199,6 +199,8 @@ require_once("conexao.php");
 				 echo "\nPDO::errorInfo():\n";
     			print_r($conn->errorInfo());
 			}
+			$stmt = null; //encerra conexão 
+			$conn = null; //encerra conexão com o banco
 	}
 }
 
