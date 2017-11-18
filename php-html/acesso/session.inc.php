@@ -1,0 +1,23 @@
+<?php
+require_once("banco.inc.php");
+session_start();
+if(isset($_SESSION['logged'])){
+	if($_SESSION['logged']){
+		if(isset($_SESSION['login'])&&isset($_SESSION['senha'])){
+			if(verificar_hash($_SESSION['login'],$_SESSION['senha'])){
+				$logged=1;
+			}else{
+				$_SESSION['logged']=0;
+				$logged=0;
+			}
+		}else{
+			$logged=0;
+		}
+	}else{
+		$logged=0;
+	}
+}else{
+	$_SESSION['logged']=0;
+	$logged=0;
+}
+?>
