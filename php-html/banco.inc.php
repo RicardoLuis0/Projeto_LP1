@@ -1,4 +1,5 @@
 <?php
+
 function checar_login($login){
 	$conn=mysqli_connect("localhost","root","","CasaCuore");
 	if(!$conn->connect_errno===0){
@@ -11,6 +12,7 @@ function checar_login($login){
 	}
 	return false;
 }
+
 function checar_cpf($cpf){
 	$conn=mysqli_connect("localhost","root","","CasaCuore");
 	if(!$conn->connect_errno===0){
@@ -23,6 +25,7 @@ function checar_cpf($cpf){
 	}
 	return false;
 }
+
 function verificar_hash($login,$senha){
 	$conn=mysqli_connect("localhost","root","","CasaCuore");
 	if(!$conn->connect_errno===0){
@@ -56,6 +59,7 @@ function trocar_senha($login,$senha,$nova_senha){
 		return false;
 	}
 }
+
 function add_usuario_pessoa($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$responsavel=0,$foto='foto_padrao.jpg'){
 	if(checar_cpf($cpf)==true){
 		return -1;
@@ -74,4 +78,44 @@ function add_usuario_pessoa($login,$senha,$cpf,$nome,$nascimento,$email,$profiss
 		$conn->close();
 		return 1;
 	}
+}
+
+function pegar_pessoa($cpf){
+	$conn=mysqli_connect("localhost","root","","CasaCuore");
+	if(!$conn->connect_errno===0){
+		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+	}
+	$sql="SELECT * FROM pessoas WHERE cpf = '$cpf'";
+	$res=$conn->query($sql);
+	if($res->num_rows>0){
+		return $res->fetch_assoc();
+	}
+	return false;
+}
+
+function pegar_pessoa_login($login){
+	$conn=mysqli_connect("localhost","root","","CasaCuore");
+	if(!$conn->connect_errno===0){
+		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+	}
+	$sql="SELECT * FROM usuarios WHERE login = '$login'";
+	$res=$conn->query($sql);
+	if(!($res->num_rows>0)){
+		return false;
+	}
+	$sql="SELECT * FROM pessoas WHERE cpf = '".$res->fetch_assoc()['cpf']."'";
+	$res=$conn->query($sql);
+	if($res->num_rows>0){
+		return $res->fetch_assoc();
+	}
+	return false;
+}
+
+function update_pessoa($cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$responsavel){
+	$sql="UPDATE pessoas SET nome='$nome', nascimento='$nascimento', email='$email', profissao='$profissao', endereco='$endereco', telefone='$telefone', responsavel='$responsavel' WHERE cpf='$cpf'";
+	$conn=mysqli_connect("localhost","root","","CasaCuore");
+	if(!$conn->connect_errno===0){
+		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+	}
+	return $conn->query($sql);
 }
