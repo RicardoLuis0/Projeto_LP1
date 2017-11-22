@@ -197,7 +197,7 @@ require_once("conexao.php");
 				header("Refresh:2; url=crud.php?crud=Listar");
 			} else {
 				 echo "\nPDO::errorInfo():\n";
-    				 print_r($conn->errorInfo());
+    			print_r($conn->errorInfo());
 			}
 			$stmt = null; //encerra conexão 
 			$conn = null; //encerra conexão com o banco
