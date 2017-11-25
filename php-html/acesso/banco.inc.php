@@ -250,3 +250,28 @@ function buscar_usuarios_cpf($cpf){
 	}
 	return $res->fetch_all();
 }
+
+function deletar_usuario($login){
+	$conn=mysqli_connect("localhost","root","","CasaCuore");
+	if(!$conn->connect_errno===0){
+		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+	}
+	$sql="SELECT * FROM usuarios WHERE login = '$login'";
+	$res=$conn->query($sql);
+	if($res->num_rows==0){
+		return 0;
+	}
+	$usuario=$res->fetch_assoc();
+	$cpf=$usuario['cpf'];
+	$sql="DELETE FROM pessoas WHERE cpf='$cpf'";
+	$conn->query($sql);
+	if($res===0){
+		return -1;
+	}
+	$sql="DELETE FROM usuarios WHERE login='$login'";
+	$conn->query($sql);
+	if($res===0){
+		return -2;
+	}
+	return true;
+}

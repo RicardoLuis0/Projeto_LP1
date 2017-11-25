@@ -14,6 +14,7 @@
 				$admin=0;
 				break;
 			case "Admin":
+				$pessoa=pegar_pessoa_login($_SESSION['login']);
 				echo "<h5> Bem vindo Administrador ".$_SESSION['login']." <a href=gerenciar.php>Gerenciar Conta</a> <a href=gerenciar_site.php>Gerenciar Site</a> <a href=logout.php>Deslogar</a> <a href='index.php'>Index</a></h5>";
 				$admin=1;
 				break;
