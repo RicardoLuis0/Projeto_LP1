@@ -30,11 +30,11 @@ CREATE TABLE `agenda` (
   `espaco` varchar(20) NOT NULL,
   `id_evento` int(11) NOT NULL,
   `evento` text NOT NULL,
+  `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
   `hora_inicio` time NOT NULL,
   `hora_fim` time NOT NULL,
   `log` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `data_inicio` date NOT NULL,
   `responsavel` int(11) NOT NULL,
   `cod_cat` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
