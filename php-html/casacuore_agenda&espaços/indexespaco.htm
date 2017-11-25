@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	</head>
+	<body>
+		<h1 align="center">Cadastro</h1>
+
+		<form action="insert_espaco.php" method="POST" onsubmit="return valida_dados(this)">
+			<p>Nome <input type="text" name="nome"></p>
+			<p>Descrição<input type="text" name="descricao"></p>
+			<p>Valor por hora<input type="text" name="valor_hora"></p>
+			<p>Vagas<input type="text" name="vagas"></p>
+			<p>Fotos<input type="text" name="fotos"></p>
+
+		<input type="submit" name="Enviar" value="Enviar"></h2>
+		</form>
+
+		<h1 align="center">Busca</h1>
+
+		<form action="busca_espaco.php" method="POST" onsubmit="return valida_dados(this)">
+			<select name="dado">
+				<option value="null" selected>Selecione um dado...</option>
+				<option value="nome">Nome</option>
+				<option value="descricao">Descrição</option>
+				<option value="valor_hora">Valor por hora</option>
+				<option value="vagas">Vagas</option>
+				<option value="fotos">Fotos</option>
+			</select>
+			<p>Buscar: <input type="text" name="chave"></p>
+
+		<input type="submit" name="Buscar" value="Buscar"></h2>
+		</form>
+
+		<form action="update_espaco.php" method="POST" onsubmit="return valida_dados(this)">
+			<select name="dado">
+				<option value="null" selected>Selecione um dado...</option>
+				<option value="nome_novo">Nome</option>
+				<option value="descricao">Descrição</option>
+				<option value="vagas">Valor por hora</option>
+				<option value="valor_hora">Vagas</option>
+				<option value="fotos">Fotos</option>
+			</select>
+			<p>Atualizar para: <input type="text" name="chave"></p>
+			<p>Nome <input type="text" name="nome"></p>
+			
+
+		<input type="submit" name="Enviar" value="Enviar"></h2>
+		</form>
+	</body>
+</html>

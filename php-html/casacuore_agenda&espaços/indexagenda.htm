@@ -1,0 +1,75 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	</head>
+	<body>
+		<h1 align="center">Cadastro</h1>
+
+		<form action="insert_espaco.php" method="POST" onsubmit="return valida_dados(this)">
+			<p>Espaço <input type="text" name="espaco"></p>
+			<p>Evento<input type="text" name="evento"></p>
+			<p>Data de inicio<input type="text" name="data_inicio"></p>
+			<p>Data de fim<input type="text" name="data_fim"></p>
+			<p>Hora de inicio<input type="text" name="hora_inicio"></p>
+			<p>Hora de fim<input type="text" name="hora_fim"></p>
+			<p>Responsavel<input type="text" name="responsavel"></p>
+			<p>Catalizador<input type="text" name="cod_cat"></p>
+
+		<input type="submit" name="Enviar" value="Enviar"></h2>
+		</form>
+
+		<h1 align="center">Busca</h1>
+
+		<form action="busca_espaco.php" method="POST" onsubmit="return valida_dados(this)">
+			<select id="dado" name="dado" onchange="dadoChange()">
+				<option value="null" selected>Selecione um dado...</option>
+				<option value="espaco">Espaço</option>
+				<option value="evento">Evento</option>
+				<option value="data_inicio">Data de inicio</option>
+				<option value="data_fim">Data de fim</option>
+				<option value="hora_inicio">Hora de inicio</option>
+				<option value="hora_fim">Hora de fim</option>
+				<option value="responsavel">Responsavel</option>
+				<option value="cod_cat">Catalizador</option>
+			</select>
+			<p>Buscar:
+			
+			<input id="chave" type="text" name="chave"></p>
+			
+			<select style="display:none;" id="chave_espaco" name="chave_espaco">
+				<option value="null" sel ected>Selecione um dado...</option>
+			 
+			</select>
+			<select style="display:none;" id="chave_resposavel" name="chave_responsavel">
+				<option value="null" selected>Selecione um dado...</option>
+			</select>
+			<select style="display:none;" id="chave_catalizador" name="chave_catalizador">
+				<option value="null" selected>Selecione um dado...</option>
+			</select>
+			
+		</br>
+		<input type="submit" name="Buscar" value="Buscar"></h2>
+		</form>
+
+		<form action="update_espaco.php" method="POST" onsubmit="return valida_dados(this)">
+			<select name="dado">
+				<option value="null" selected>Selecione um dado...</option>
+				<option value="espaco">Espaço</option>
+				<option value="evento">Evento</option>
+				<option value="data_inicio">Data de inicio</option>
+				<option value="data_fim">Data de fim</option>
+				<option value="hora_inicio">Hora de inicio</option>
+				<option value="hora_fim">Hora de fim</option>
+				<option value="responsavel">Responsavel</option>
+				<option value="cod_cat">Catalizador</option>
+			</select>
+			<p>Atualizar para: <input type="text" name="chave"></p>
+			<p>Espaço <input type="text" name="espaco"></p>
+			
+
+		<input type="submit" name="Enviar" value="Enviar"></h2>
+		</form>
+	</body>
+	
+</html>
+<script src="../js/select.js"/></script>
