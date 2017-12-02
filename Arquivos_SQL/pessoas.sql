@@ -9,5 +9,8 @@ CREATE TABLE IF NOT EXISTS CasaCuore.pessoas(
 	telefone VARCHAR(20) NOT NULL,
 	foto VARCHAR(64),
 	responsavel BOOLEAN,
+	ativo BOOLEAN,
+	data_inicio DATE NOT NULL,
+	data_final DATE,
 	PRIMARY KEY(cpf)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
