@@ -13,6 +13,19 @@ function checar_login($login){
 	return false;
 }
 
+function pegar_usuario_login($login){
+	$conn=mysqli_connect("localhost","root","","CasaCuore");
+	if(!$conn->connect_errno===0){
+		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+	}
+	$sql="SELECT * FROM usuarios WHERE login = '$login'";
+	$res=$conn->query($sql);
+	if($res->num_rows>0){
+		return $res->fetch_assoc();
+	}
+	return false;
+}
+
 function checar_cpf($cpf){
 	$conn=mysqli_connect("localhost","root","","CasaCuore");
 	if(!$conn->connect_errno===0){
@@ -80,6 +93,28 @@ function add_usuario_pessoa($login,$senha,$cpf,$nome,$nascimento,$email,$profiss
 	}
 }
 
+function add_usuario_educador($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$conta_banco,$salario,$responsavel=0,$foto='foto_padrao.jpg'){
+	if(checar_cpf($cpf)==true){
+		return -1;
+	}else if(checar_login($login)==true){
+		return -2;
+	}else{
+		$hash=password_hash($senha,PASSWORD_DEFAULT);
+		$conn=mysqli_connect("localhost","root","","CasaCuore");
+		if(!$conn->connect_errno===0){
+			die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+		}
+		$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,responsavel,foto) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone','$responsavel','$foto')";
+		$conn->query($sql);
+		$sql="INSERT INTO usuarios (login,hash,cpf,tipo_conta) VALUES ('$login','$hash','$cpf','Educador')";
+		$conn->query($sql);
+		$sql="INSERT INTO educadores (cpf,conta_bancaria,salario) VALUES ('$cpf','$conta_banco','$salario')";
+		$conn->query($sql);
+		$conn->close();
+		return 1;
+	}
+}
+
 function add_usuario_pessoa_admin($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$responsavel=0,$foto='foto_padrao.jpg'){
 	if(checar_cpf($cpf)==true){
 		return -1;
@@ -140,6 +175,15 @@ function pegar_pessoa_login($login){
 		return false;
 	}
 	$sql="SELECT * FROM pessoas WHERE cpf = '".$res->fetch_assoc()['cpf']."'";
+	/*$sql="
+ SELECT P
+ FROM
+ pessoas AS P
+ JOIN
+ usuarios AS U
+ ON P.cpf=U.cpf
+ WHERE U.login='$login'
+	";*/
 	$res=$conn->query($sql);
 	if($res->num_rows>0){
 		return $res->fetch_assoc();
@@ -256,22 +300,108 @@ function deletar_usuario($login){
 	if(!$conn->connect_errno===0){
 		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
 	}
-	$sql="SELECT * FROM usuarios WHERE login = '$login'";
-	$res=$conn->query($sql);
-	if($res->num_rows==0){
-		return 0;
-	}
-	$usuario=$res->fetch_assoc();
+	$usuario=pegar_usuario_login($login);
 	$cpf=$usuario['cpf'];
+	if($usuario['tipo_conta']=="Educador"){
+		$sql="DELETE FROM educadores WHERE cpf='$cpf'";
+		$res=$conn->query($sql);
+		if($res===0){
+			return -1;
+		}
+	}
 	$sql="DELETE FROM pessoas WHERE cpf='$cpf'";
-	$conn->query($sql);
+	$res=$conn->query($sql);
 	if($res===0){
 		return -1;
 	}
 	$sql="DELETE FROM usuarios WHERE login='$login'";
-	$conn->query($sql);
+	$res=$conn->query($sql);
 	if($res===0){
 		return -2;
 	}
 	return true;
+}
+
+function promover_pessoa($login,$conta_banco,$salario){
+	$conn=mysqli_connect("localhost","root","","CasaCuore");
+	if(!$conn->connect_errno===0){
+		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+	}
+	$usuario=pegar_usuario_login($login);
+	$cpf=$usuario['cpf'];
+	$sql="UPDATE usuarios SET tipo_conta='Educador' WHERE login='$login' AND tipo_conta='Pessoa'";
+	$res=$conn->query($sql);
+	if($res){
+		$sql="INSERT INTO educadores (cpf,conta_bancaria,salario) VALUES ('$cpf','$conta_banco','$salario')";
+		$conn->query($sql);
+		return true;
+	}else{
+		if(checar_login($login)){
+			return -1;
+		}else{
+			return 0;
+		}
+	}
+	return 0;
+}
+
+function promover_pessoa_admin($login){
+	$conn=mysqli_connect("localhost","root","","CasaCuore");
+	if(!$conn->connect_errno===0){
+		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+	}
+	$sql="UPDATE usuarios SET tipo_conta='Admin' WHERE login='$login' AND tipo_conta='Pessoa'";
+	$res=$conn->query($sql);
+	if($res){
+		return true;
+	}else{
+		if(checar_login($login)){
+			return -1;
+		}else{
+			return 0;
+		}
+	}
+}
+
+function rebaixar_admin($login){
+	$conn=mysqli_connect("localhost","root","","CasaCuore");
+	if(!$conn->connect_errno===0){
+		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+	}
+	$sql="UPDATE usuarios SET tipo_conta='Pessoa' WHERE login='$login' AND tipo_conta='Admin'";
+	$res=$conn->query($sql);
+	if($res){
+		return true;
+	}else{
+		if(checar_login($login)){
+			return -1;
+		}else{
+			return 0;
+		}
+	}
+}
+
+function rebaixar_educador($login){
+	$conn=mysqli_connect("localhost","root","","CasaCuore");
+	if(!$conn->connect_errno===0){
+		die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
+	}
+	$usuario=pegar_usuario_login($login);
+	if($usuario===false){
+		return false;
+	}
+	$cpf=$usuario['cpf'];
+	if($usuario['tipo_conta']==="Educador"){
+		$sql="DELETE FROM educadores WHERE cpf='$cpf'";
+		$res=$conn->query($sql);
+		if($res){
+			$sql="UPDATE usuarios SET tipo_conta='Pessoa' WHERE login='$login'";
+			$conn->query($sql);
+			return true;
+		}else{
+			return -2;
+		}
+	}else{
+		return -1;
+	}
 }

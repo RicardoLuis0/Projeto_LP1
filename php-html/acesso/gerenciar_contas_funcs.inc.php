@@ -4,7 +4,7 @@ function print_contas($array){
 		echo "Nao ha resultados.";
 	}else{
 		echo "<table border=1>";
-		echo "<tr><th>Login</th><th>Tipo</th><th>CPF</th><th>Nome</th><th>Nascimento</th><th>E-mail</th><th>Profissao</th><th>Endereco</th><th>Telefone</th><th colspan=2>Acoes</th></tr>";
+		echo "<tr><th>Login</th><th>Tipo</th><th>CPF</th><th>Nome</th><th>Nascimento</th><th>E-mail</th><th>Profissao</th><th>Endereco</th><th>Telefone</th><th colspan=4>Acoes</th></tr>";
 		foreach($array as $value){
 			$p_login=$value[0];
 			$p_tipo=$value[1];
@@ -27,8 +27,41 @@ function print_contas($array){
 			<input type=hidden name='login' value=$p_login />
 			<input type=submit value='Remover' style='float:left'/>
 			</form>
-			</td>
-			</tr>";
+			</td>";
+			if($p_tipo=="Pessoa"){
+				echo "
+				<td>
+				<form action='promover_pessoa.php' method=POST>
+				<input type=hidden name='login' value=$p_login />
+				<input type=submit value='Promover para Educador' style='float:left'/>
+				</form>
+				</td>
+				<td>
+				<form action='promover_pessoa_admin.php' method=POST>
+				<input type=hidden name='login' value=$p_login />
+				<input type=submit value='Promover para Admin' style='float:left'/>
+				</form>
+				</td>";
+			}else if($p_tipo=="Educador"){
+				echo "
+				<td>
+				<form action='rebaixar_educador.php' method=POST>
+				<input type=hidden name='login' value=$p_login />
+				<input type=submit value='Rebaixar para Pessoa' style='float:left'/>
+				</form>
+				</td>
+				<td></td>";
+			}else{
+				echo "
+				<td>
+				<form action='rebaixar_admin.php' method=POST>
+				<input type=hidden name='login' value=$p_login />
+				<input type=submit value='Rebaixar para Pessoa' style='float:left'/>
+				</form>
+				</td>
+				<td></td>";
+			}
+			echo "</tr>";
 			//echo "<p>Login: $p_login Tipo da Conta: $p_tipo CPF: $p_cpf Nome: $p_nome Nascimento: $p_nascimento E-mail: $p_email Profissao: $p_profissao Endereco: $p_endereco Telefone: $p_telefone </p>";
 		}
 		echo "<table>";

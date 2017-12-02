@@ -12,6 +12,11 @@
 		</form>
 		</p>
 		<p>
+		<form action='cadastrar_educador.html' method=POST>
+		<input type=submit value='Adicionar Educador' />
+		</form>
+		</p>
+		<p>
 		<form action='cadastrar_admin.html' method=POST>
 		<input type=submit value='Adicionar Admin' />
 		</form>
