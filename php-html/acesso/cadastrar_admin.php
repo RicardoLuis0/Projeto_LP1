@@ -12,10 +12,12 @@ $endereco=$_POST['endereco'];
 $telefone=$_POST['telefone'];
 $login=$_POST['login'];
 $senha=$_POST['senha'];
-if($cpf==""||$nome==""||$nascimento==""||$email==""||$profissao==""||$endereco==""||$telefone==""||$login==""||$senha==""){
+$data_inicial=$_POST['data_inicial'];
+$data_auto=(isset($_POST['data_auto']));
+if($cpf==""||$nome==""||$nascimento==""||$email==""||$profissao==""||$endereco==""||$telefone==""||$login==""||$senha==""||($data_inicial==""&&$data_auto==false)){
 	die("faltando informacoes");
 }
-$resultado=add_usuario_pessoa_admin($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone);
+$resultado=add_usuario_pessoa_admin($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$data_inicial,$data_auto);
 if($resultado==1){
 	echo "cadastrado com successo";
 }else if($resultado==-1){

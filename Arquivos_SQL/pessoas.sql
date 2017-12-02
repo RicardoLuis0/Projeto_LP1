@@ -7,10 +7,10 @@ CREATE TABLE IF NOT EXISTS CasaCuore.pessoas(
 	profissao VARCHAR(64) NOT NULL,
 	endereco VARCHAR(64) NOT NULL,
 	telefone VARCHAR(20) NOT NULL,
-	foto VARCHAR(64),
-	responsavel BOOLEAN,
-	ativo BOOLEAN,
-	data_inicio DATE NOT NULL,
+	foto VARCHAR(64) NOT NULL DEFAULT 'foto_padrao.jpg',
+	responsavel BOOLEAN NOT NULL DEFAULT FALSE,
+	ativo BOOLEAN NOT NULL DEFAULT FALSE,
+	data_inicial DATE NOT NULL,
 	data_final DATE,
 	PRIMARY KEY(cpf)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

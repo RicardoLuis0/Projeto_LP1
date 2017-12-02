@@ -73,7 +73,7 @@ function trocar_senha($login,$senha,$nova_senha){
 	}
 }
 
-function add_usuario_pessoa($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$responsavel=0,$foto='foto_padrao.jpg'){
+function add_usuario_pessoa($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$data_inicial,$data_auto){
 	if(checar_cpf($cpf)==true){
 		return -1;
 	}else if(checar_login($login)==true){
@@ -84,7 +84,12 @@ function add_usuario_pessoa($login,$senha,$cpf,$nome,$nascimento,$email,$profiss
 		if(!$conn->connect_errno===0){
 			die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
 		}
-		$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,responsavel,foto) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone','$responsavel','$foto')";
+		if($data_auto){
+			//$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,responsavel,foto,data_inicial) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone','$responsavel','$foto','".date("YYYY-MM-DD")."')";
+			$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,data_inicial) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone',CURDATE())";
+		}else{
+			$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,data_inicial) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone','$data_inicial')";
+		}
 		$conn->query($sql);
 		$sql="INSERT INTO usuarios (login,hash,cpf,tipo_conta) VALUES ('$login','$hash','$cpf','Pessoa')";
 		$conn->query($sql);
@@ -93,7 +98,7 @@ function add_usuario_pessoa($login,$senha,$cpf,$nome,$nascimento,$email,$profiss
 	}
 }
 
-function add_usuario_educador($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$conta_banco,$salario,$responsavel=0,$foto='foto_padrao.jpg'){
+function add_usuario_educador($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$data_inicial,$data_auto,$conta_banco,$salario){
 	if(checar_cpf($cpf)==true){
 		return -1;
 	}else if(checar_login($login)==true){
@@ -104,7 +109,11 @@ function add_usuario_educador($login,$senha,$cpf,$nome,$nascimento,$email,$profi
 		if(!$conn->connect_errno===0){
 			die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
 		}
-		$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,responsavel,foto) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone','$responsavel','$foto')";
+		if($data_auto){
+			$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,data_inicial) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone',CURDATE())";
+		}else{
+			$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,data_inicial) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone','$data_inicial')";
+		}
 		$conn->query($sql);
 		$sql="INSERT INTO usuarios (login,hash,cpf,tipo_conta) VALUES ('$login','$hash','$cpf','Educador')";
 		$conn->query($sql);
@@ -115,7 +124,7 @@ function add_usuario_educador($login,$senha,$cpf,$nome,$nascimento,$email,$profi
 	}
 }
 
-function add_usuario_pessoa_admin($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$responsavel=0,$foto='foto_padrao.jpg'){
+function add_usuario_pessoa_admin($login,$senha,$cpf,$nome,$nascimento,$email,$profissao,$endereco,$telefone,$data_inicial,$data_auto){
 	if(checar_cpf($cpf)==true){
 		return -1;
 	}else if(checar_login($login)==true){
@@ -126,7 +135,11 @@ function add_usuario_pessoa_admin($login,$senha,$cpf,$nome,$nascimento,$email,$p
 		if(!$conn->connect_errno===0){
 			die("erro conectar como usuario:(".$conn->connect_errno.") ".$conn->connect_error);
 		}
-		$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,responsavel,foto) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone','$responsavel','$foto')";
+		if($data_auto){
+			$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,data_inicial) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone',CURDATE())";
+		}else{
+			$sql="INSERT INTO pessoas (cpf,nome,nascimento,email,profissao,endereco,telefone,data_inicial) VALUES ('$cpf','$nome','$nascimento','$email','$profissao','$endereco','$telefone','$data_inicial')";
+		}
 		$conn->query($sql);
 		$sql="INSERT INTO usuarios (login,hash,cpf,tipo_conta) VALUES ('$login','$hash','$cpf','Admin')";
 		$conn->query($sql);

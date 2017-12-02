@@ -34,6 +34,7 @@ if($logged){
 	$s_login=$_SESSION['login'];
 }else{
 	//<a href=cadastrar.html>Criar Conta</a>
+	$admin=0;
 	echo "<h5> Voce nao esta logado <a href=login.php>Fazer Login</a> <a href='index.php'>Index</a></h5>";
 }
 ?>
